@@ -72,7 +72,7 @@
 ?>
       </ul>
 
-          <a class="nav-link active" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
+          <a class="nav-link active" href="login.php"><i class="fas fa-sign-out-alt"></i></a>
           <a class="nav-link active" href="carrito.php"><i class="fas fa-shopping-cart fa-lg" ></i></a>
     
       <form class="form-inline my-2 my-lg-0">
@@ -81,7 +81,9 @@
       </form>
     </div>
   </nav>
-       <div id="discos" style="width: 50%; margin:5%"></div>
+       <div id="discos" style="width: 90%; margin:5%"></div>
+        <div id="usuarios" style="width: 90%; margin:5%"></div>
+
 
 </body>
 </html>
@@ -96,7 +98,9 @@
                 sorting : true, //ordenamiento de registros
                 defaultSorting: 'titulo asc', //manera de ordenamiento
                 actions:{
-                    listAction : '../Resources/PHP/acciones.php?action=list'
+                    listAction : '../Resources/PHP/accionesDiscos.php?action=list',
+                    updateAction : '../Resources/PHP/accionesDiscos.php?action=update',
+                    deleteAction : '../Resources/PHP/accionesDiscos.php?action=delete'
                 },
                 fields:{
                     id:{
@@ -128,11 +132,94 @@
                     },
                     caratula:{
                         title:'Caratula',
-                        width:'10%'
+                        width:'10%',
+                        edit:true
                     }
                 }
             });
 
             $('#discos').jtable('load');
+        });
+    </script>
+
+
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#usuarios').jtable({
+                title : "Usuarios",
+                paging: true, //paginacion de la tabla es verdadera
+                pageSize : 5, //nos muestra el numero de registros
+                sorting : true, //ordenamiento de registros
+                defaultSorting: 'id asc', //manera de ordenamiento
+                actions:{
+                    listAction : '../Resources/PHP/accionesUsuarios.php?action=list',
+                    updateAction : '../Resources/PHP/accionesUsuarios.php?action=update',
+                    deleteAction : '../Resources/PHP/accionesUsuarios.php?action=delete'
+                },
+                fields:{
+                    id:{
+                        key:true,
+                        create:false,
+                        edit:false,
+                        list:false
+                    },
+                    nombre:{
+                        title:'Nombre del Usuario',
+                        width:'15%',
+                        edit:false
+                    },
+                    apellido:{
+                        title:'Apellido del Usuario',
+                        width:'15%',
+                        edit:false
+                    },
+                    email:{
+                        title:'Email',
+                        width:'15%',
+                        edit:true
+                    },
+                    telefono:{
+                        title:'Telefono',
+                        width:'15%',
+                        edit:true
+                    },
+                    pass:{
+                        title:'Contraseña',
+                        width:'15%',
+                        edit:true
+                    },
+                    pais:{
+                        title:'Pais',
+                        width:'15%'
+                    },
+                    provincia:{
+                        title:'Provincia',
+                        width:'15%'
+                    },
+                    localidad:{
+                        title:'Localidad',
+                        width:'15%'
+                    },
+                    calle:{
+                        title:'Calle',
+                        width:'15%'
+                    },
+                    detalle:{
+                        title:'Detalle',
+                        width:'15%'
+                    },
+                    cp:{
+                        title:'Cp',
+                        width:'15%'
+                    },
+                    tipo:{
+                        title:'Tipo',
+                        width:'15%'
+                    }
+                }
+            });
+
+            $('#usuarios').jtable('load');
         });
     </script>
