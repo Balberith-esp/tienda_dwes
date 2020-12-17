@@ -26,15 +26,15 @@
         require_once '../Class/BaseDatos.php';
         session_start();
         if(isset($_SESSION['logueado'])){
-          if($_SESSION['logueado']['inicio']){
+          // if($_SESSION['logueado']->getInicio()){
             
             echo "<script>
                       $(function () { 
-                        toastr.info('Bienvenido ".$_SESSION['logueado']['nombre']."');
+                        toastr.info('Bienvenido ".$_SESSION['logueado']->getNombre()."');
                       });
                 </script></script>";
-            $_SESSION['logueado']['inicio'] = false;
-          }
+          //   $_SESSION['logueado']->setInicio(False);
+          // }
         }else{
           header("Location: login.php");
         }
@@ -49,7 +49,7 @@
 
             $nuevo = true;
             for ($i=0; $i < sizeof($_SESSION['cesta']) ; $i++) { 
-              if ($articulo['id'] ==  $_SESSION['cesta'][$i]['id']) {
+              if ($articulo->getId() ==  $_SESSION['cesta'][$i]['id']) {
                 $nuevo = false;              
                 $_SESSION['cesta'][$i]['cantidad']++;
               }
@@ -64,7 +64,7 @@
         }    
         echo "<script>
                 $(function () { 
-                  toastr.success('Tu disco ".$articulo['titulo']." se ha añadido a la cesta');
+                  toastr.success('Tu disco ".$articulo->getTitulo()." se ha añadido a la cesta');
                 });
             </script>";      
       }
@@ -98,7 +98,7 @@
             if (isset($_SESSION['logueado'])) {
 
               //A la hora de comprobar el tipo no coge nada si es admin
-                if ($_SESSION['logueado']['admin']) {
+                if ($_SESSION['logueado']->isAdmin()) {
                   echo "<li class='nav-item active'>
                       <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
                     </li>";
@@ -125,7 +125,6 @@
 <br>
       
     <?php
-      
    
     $data = BaseDatos::getInstance()->consultaDiscos();
         foreach($data as $key => $value){

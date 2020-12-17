@@ -2,7 +2,7 @@
 
 require_once 'Disco.php';
 
-// require_once 'Usuario.php';
+require_once 'Usuario.php';
 
 class BaseDatos {
 
@@ -127,17 +127,9 @@ class BaseDatos {
 
 		if($disco = $consulta->fetch()){
 
-            $disco = new Disco($disco['id'],);
-			return [
-					   'id'=>$disco['id'],
-					   'titulo'=>$disco['titulo'],
-					   'autor'=>$disco['autor'],
-					   'genero'=>$disco['genero'],
-					   'precio'=>$disco['precio'],
-					   'caratula'=>$disco['caratula'],	   
-					   'cantidad'=>1,	   
-					 
-				   ];	
+            $discoBuscado = new Disco($disco['id'],$disco['autor'],$disco['caratula'],
+                    $disco['detalle'],$disco['genero'],$disco['precio'],$disco['titulo']);
+			return $discoBuscado;	
 		}	
     }
 
@@ -155,7 +147,75 @@ class BaseDatos {
 	// 	}   
 	// }
 
+//PDO:
+public function usuarioCorrectoPDO($usuario, $contrasenia){
 
+	$instance = BaseDatos::getInstance();
+        $conexion = $instance->getConnection();
+
+
+	$consulta=$conexion->prepare('select count(*) as num from usuarios where email=? and pass=?');
+
+	$usu=$usuario;
+	$psw=md5($contrasenia);
+
+	
+	$consulta->bindParam(1, $usu);
+	$consulta->bindParam(2, $psw);
+
+	//$consulta->execute();
+
+	if($consulta->execute()){
+	while ($fila=$consulta->fetch()){
+			$dev=$fila['num'];
+		}
+	}
+
+
+
+	unset($consulta);
+	unset($conexion);
+
+
+	if($dev==1){
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+public function datosUsuario($usuario){
+
+	$instance = BaseDatos::getInstance();
+    $conexion = $instance->getConnection();
+
+
+	$consulta=$conexion->prepare('select * from usuarios where email=?');
+
+	$usu=$usuario;
+	
+	$consulta->bindParam(1, $usu);
+
+	if($consulta->execute()){
+	    while ($fila=$consulta->fetch()){   
+            $dev=$fila;
+            $nuevoUsuario = new Usuario($dev['nombre'], $dev['apellido'], $dev['email'], 
+                                        $dev['telefono'], $dev['id'], $dev['pass'], $dev['pais'], $dev['provincia'],
+                                        $dev['localidad'], $dev['calle'], $dev['detalle'], $dev['cp'],$dev['tipo']); 
+            };
+	}
+
+
+
+	unset($consulta);
+	unset($conexion);
+
+	if(isset($dev)){	
+		return $nuevoUsuario;
+	}
+
+}
 
 }
 

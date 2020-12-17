@@ -29,10 +29,6 @@
           header("Location: login.php");
         }
 
-        if(isset($_POST['nuevoItemCesta'])){
-          $idArticulo = $_POST['idArticulo'];
-          $_SESSION['cesta'][] = devuelveArticulo($idArticulo);
-        }
 
   ?>
 
@@ -63,7 +59,7 @@
             if (isset($_SESSION['logueado'])) {
 
               //A la hora de comprobar el tipo no coge nada si es admin
-                if ($_SESSION['logueado']['admin']) {
+                if ($_SESSION['logueado']->isAdmin()) {
                   echo "<li class='nav-item active'>
                       <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
                     </li>";

@@ -17,7 +17,7 @@
     <?php 
     /*Comprobar si el usuario esta logeado*/
     /*Comprobar el submit y realizar la funcion*/
-        require_once '../Resources/PHP/controlSession.php';
+        require_once '../Class/BaseDatos.php';
         session_start();
         
 
@@ -25,27 +25,11 @@
             $usu=$_POST['nombreUsuario'];
             $cont=$_POST['contaseñaUsuario'];  
 
-            $busqueda=usuarioCorrectoMSQLI($usu,$cont);
-            $datosUsuario=datosUsuario($usu);
+            $busqueda=BaseDatos::getInstance()->usuarioCorrectoPDO($usu,$cont);
+            $usuario=BaseDatos::getInstance()->datosUsuario($usu);
             
             
             if ($busqueda) {
-               if ($datosUsuario['tipo']==0) {
-                  $usuario = [
-                    'correo' => $usu,
-                    'inicio' => true,
-                    'admin' =>true,
-                    'nombre' => $datosUsuario['nombre']
-                 ];
-                }
-                else if ($datosUsuario['tipo']==1) {
-                  $usuario = [
-                    'correo' => $usu,
-                    'inicio' => true,
-                    'admin' => false,
-                    'nombre' => $datosUsuario['nombre']
-                 ];
-                }
               $_SESSION['logueado'] = $usuario;
               header("Location: inicio.php");
             }

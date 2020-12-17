@@ -68,7 +68,7 @@
         if (isset($_SESSION['logueado'])) {
 
           //A la hora de comprobar el tipo no coge nada si es admin
-            if ($_SESSION['logueado']['admin']) {
+            if ($_SESSION['logueado']->isAdmin()) {
               echo "<li class='nav-item active'>
                   <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
                 </li>";
@@ -83,7 +83,7 @@
       </ul>
         
         <?php 
-            if(isset($_SESSION['logueado']['activo'])){
+            if(isset($_SESSION['logueado']->isActivo())){
               echo '<a class="nav-link active" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
             }
         ?>
@@ -118,11 +118,11 @@
             echo "<li class='list-group-item'>
                     <div class='container'>
                       <div class='row'>
-                        <div class='col col-lg-2'><img src='../Resources/img/".$value['caratula']."' alt='".$value['titulo']."' style='width:50px;height:50px;'></div>
-                        <div class='col'>".$value['titulo']."</div>
-                        <div class='col'><input type='number' id='".$value['id']."' name='cantidad' min='1' max='25' value='".$value['cantidad']."' ></div>
-                        <input type='hidden' value='".$value['precio']."' id='precioUnidad_".$value['id']."'>
-                        <div class='col precios' id='precioTotal_".$value['id']."' >".$value['precio']*$value['cantidad']."€</div>
+                        <div class='col col-lg-2'><img src='../Resources/img/".$value->getCaratula()."' alt='".$value->getTitulo()."' style='width:50px;height:50px;'></div>
+                        <div class='col'>".$value->getTitulo()."</div>
+                        <div class='col'><input type='number' id='".$value->getId()."' name='cantidad' min='1' max='25' value='".$value['cantidad']."' ></div>
+                        <input type='hidden' value='".$value['precio']."' id='precioUnidad_".$value->getId()."'>
+                        <div class='col precios' id='precioTotal_".$value->getId()."' >".$value->getPrecio()*$value->getCantidad()."€</div>
                       </div>
                     </div>
                   </li>";
