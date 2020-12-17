@@ -1,6 +1,6 @@
 <?php 
 
-class cesta {
+class Cesta {
 
     protected [] $carrito; 
 

@@ -1,6 +1,6 @@
 <?php
 
-class Disco {
+class Autores {
 
     protected $edad;
     protected $fotografia;

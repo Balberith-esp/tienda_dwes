@@ -22,7 +22,8 @@
 
   <?php 
     /*Comprobar si el usuario esta logeado*/
-        require_once '../Resources/PHP/funciones.php';
+        
+        require_once '../Class/BaseDatos.php';
         session_start();
         if(isset($_SESSION['logueado'])){
           if($_SESSION['logueado']['inicio']){
@@ -42,7 +43,7 @@
           
           $idArticulo = $_POST['idArticulo'];
 
-          $articulo = devuelveArticulo($idArticulo);
+          $articulo = BaseDatos::getInstance()->devuelveArticulo($idArticulo);
 
           if(isset($_SESSION['cesta']) and $_SESSION['cesta'] != []){
 
@@ -125,8 +126,8 @@
       
     <?php
       
-     
-    $data = consultaDiscos();
+   
+    $data = BaseDatos::getInstance()->consultaDiscos();
         foreach($data as $key => $value){
             echo" <form action='#' method='post'>   
             <input type='hidden' name = 'idArticulo' value='".$value['id']."'>
