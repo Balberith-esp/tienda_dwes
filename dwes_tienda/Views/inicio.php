@@ -26,14 +26,14 @@
         require_once '../Class/BaseDatos.php';
         session_start();
         if(isset($_SESSION['logueado'])){
-          // if($_SESSION['logueado']->getInicio()){
-            
+          if(!isset($_SESSION['primeraVisita'])){
             echo "<script>
                       $(function () { 
                         toastr.info('Bienvenido ".$_SESSION['logueado']->getNombre()."');
                       });
-                </script></script>";
-          //   $_SESSION['logueado']->setInicio(False);
+                    </script>";
+            $_SESSION['primeraVisita']=true;
+          }
           // }
         }else{
           header("Location: login.php");
@@ -127,22 +127,24 @@
     <?php
    
     $data = BaseDatos::getInstance()->consultaDiscos();
-        foreach($data as $key => $value){
+        foreach($data as $key => $disco){
+          $discoArray= implode(',',(array)$disco);
+          // var_dump($discoArray);
             echo" <form action='#' method='post'>   
-            <input type='hidden' name = 'idArticulo' value='".$value['id']."'>
-            <input type='hidden' id='articuloCompleto_".$value['id']."' value='".implode(',',$value)."'>
+            <input type='hidden' name = 'idArticulo' value='".$disco->getId()."'>
+            <input type='hidden' id='articuloCompleto_".$disco->getId()."' value='".$discoArray."'>
                     <div class='flip-card'>
                         <div class='flip-card-inner'>
                                 <div class='flip-card-front'>
-                                    <img src='../Resources/img/".$value['caratula']."' alt='".$value['titulo']."' style='width:250px;height:250px;'>
+                                    <img src='../Resources/img/".$disco->getCaratula()."' alt='".$disco->getTitulo()."' style='width:250px;height:250px;'>
                                 </div>
                                     <div class='flip-card-back'>
-                                        <h1>".$value['autor']."</h1> 
-                                        <p>".$value['titulo']."</p>
-                                        <p>".$value['genero']."</p> 
-                                        <p>".$value['precio']."€</p>
+                                        <h1>".$disco->getAutor()."</h1> 
+                                        <p>".$disco->getTitulo()."</p>
+                                        <p>".$disco->getGenero()."</p> 
+                                        <p>".$disco->getPrecio()."€</p>
                                         <button  type='submit' name='nuevoItemCesta' class='btn btn-success'>Compar</button>
-                                        <button  type='button' onclick='despliegaModal(".$value['id'].")' class='btn btn-success'>Detalles</button>
+                                        <button  type='button' onclick='despliegaModal(".$disco->getId().")' class='btn btn-success'>Detalles</button>
                                     </div>
                         </div>
                     </div>

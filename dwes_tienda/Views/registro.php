@@ -14,7 +14,7 @@
 	
     <title>Registro</title>
     <?php 
-    require_once '../Resources/PHP/funciones.php';
+    require_once '../Class/BaseDatos.php';
         if(isset($_POST['submit'])){
             $nombre=$_POST['nombre'];
             $apellidos=$_POST['apellido'];
@@ -32,7 +32,7 @@
             }else{
                 $tipo='1';
             }
-            if(registroUsuario($nombre,$apellidos,$email,$telefono,$contraseña,$pais,$provincia,$localidad,$calle,$detalle,$cp,$tipo)){
+            if(BaseDatos::getInstance()->registroUsuario($nombre,$apellidos,$email,$telefono,$contraseña,$pais,$provincia,$localidad,$calle,$detalle,$cp,$tipo)){
                 echo '<div class="alert alert-success" role="alert">Usuario creado correctamente</div>';
                 // sleep(3);
                 // header('Location: inicio.php');

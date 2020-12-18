@@ -42,11 +42,29 @@ class BaseDatos {
     // Fin de --No tocar --No tocar --No tocar --No tocar --No tocar --No tocar --No tocar --No tocar --No tocar --
     //Comienzo metodos para interactuar con la base de datos
 
-        //Metodo registraUsuario 
+    // Comprueba que el email no este en uso
+    public function comprobarUsuarioExiste($email){
+        
+        $conexion = $this->getConnection();
+
+        $st = $conexion->prepare("SELECT * FROM usuarios WHERE  email=:email"); 
+       
+        $st->bindParam("email", $email,PDO::PARAM_STR);
+        $st->execute();
+        $count=$st->rowCount();
+        
+        
+        if($count < 1){
+            return true;
+        }else{
+            return false;
+        }
+	}
+
+    //Metodo registraUsuario, depende de la function anterior
     public function registroUsuario($nombre,$apellidos,$email,$telefono,$contrasena,$pais,$provincia,$localidad,$calle,$detalle,$cp,$tipo){
-        if(comprobarUsuarioExiste($email)){
-            $instance = BaseDatos::getInstance();
-            $conexion = $instance->getConnection();
+        if($this->comprobarUsuarioExiste($email)){
+            $conexion = $this->getConnection();
 			
 			$consulta=$conexion->prepare('INSERT INTO usuarios (nombre, apellido, email, telefono, pass, pais, provincia, localidad, calle, detalle, cp, tipo)
 				VALUES 
@@ -66,7 +84,6 @@ class BaseDatos {
 			$consulta->bindParam(':tipo',$tipo);
 
 			$consulta->execute();
-			unset($conexion);
 			return true;
 		}else{
 			return false;
@@ -76,8 +93,7 @@ class BaseDatos {
     // Metodo crea nuevo Disco
     public function nuevoDisco($titulo, $autor, $genero, $precio, $caratula){
         
-        $instance = BaseDatos::getInstance();
-        $conexion = $instance->getConnection();
+        $conexion = $this->getConnection();
 
         $consulta=$conexion->prepare('INSERT INTO discos (titulo, autor, genero, precio,caratula)
              VALUES 
@@ -90,14 +106,12 @@ class BaseDatos {
         $consulta->bindParam(':caratula',$caratula);
 
         $consulta->execute();
-        
-        unset($conexion);
                 
     }
     // Consulta todos los discos para pintarlos en inicio
     public function consultaDiscos(){
-		$instance = BaseDatos::getInstance();
-        $conexion = $instance->getConnection();
+		
+        $conexion = $this->getConnection();
 		$consulta = 'select * from discos';
 		$result = $conexion->prepare($consulta);
 		$result->execute();
@@ -105,19 +119,20 @@ class BaseDatos {
 		$disco = $result->fetch();
 		$discos = [];
 		while ($disco != null) {
-
-		    array_push($discos, $disco);
+            $nuevoDisco = new Disco($disco['id'],$disco['autor'],$disco['caratula'],
+                                    $disco['detalle'],$disco['genero'],$disco['precio'],$disco['titulo']);
+		    array_push($discos, $nuevoDisco);
 
 		    $disco = $result->fetch();
 		    
 		}
-		unset($db);
+		
 		return $discos;
     }
     // Devuelve un disco que buscamos por el id
     public function devuelveArticulo($id){
-		$instance = BaseDatos::getInstance();
-        $conexion = $instance->getConnection();
+		
+        $conexion = $this->getConnection();
 
 		$consulta=$conexion->prepare("SELECT * FROM discos WHERE id=:id");
 		
@@ -133,89 +148,60 @@ class BaseDatos {
 		}	
     }
 
-    // function comprobarUsuarioExiste($email){
-    //     $instance = BaseDatos::getInstance();
-    //     $conexion = $instance->getConnection();
+    // Comprueba el usuario y la contraseña en el login
+    public function usuarioCorrectoPDO($usuario, $contrasenia){
 
-	// 	$resultado=$conexion->query("SELECT EXISTS (SELECT email FROM usuarios WHERE email='$email');");
-	// 	$row=mysqli_fetch_row($resultado);
-
-	// 	if ($row[0]=="1") {                 
-	// 		return false;
-	// 	}else{
-	// 		return true;
-	// 	}   
-	// }
-
-//PDO:
-public function usuarioCorrectoPDO($usuario, $contrasenia){
-
-	$instance = BaseDatos::getInstance();
-        $conexion = $instance->getConnection();
+        $conexion = $this->getConnection();
 
 
-	$consulta=$conexion->prepare('select count(*) as num from usuarios where email=? and pass=?');
+        $consulta=$conexion->prepare('select count(*) as num from usuarios where email=? and pass=?');
 
-	$usu=$usuario;
-	$psw=md5($contrasenia);
+        $usu=$usuario;
+        $psw=md5($contrasenia);
 
-	
-	$consulta->bindParam(1, $usu);
-	$consulta->bindParam(2, $psw);
+        
+        $consulta->bindParam(1, $usu);
+        $consulta->bindParam(2, $psw);
 
-	//$consulta->execute();
+        if($consulta->execute()){
+        while ($fila=$consulta->fetch()){
+                $dev=$fila['num'];
+            }
+        }
 
-	if($consulta->execute()){
-	while ($fila=$consulta->fetch()){
-			$dev=$fila['num'];
-		}
-	}
+        if($dev==1){
+            return true;
+        } else {
+            return false;
+        }
 
+    }
 
+    //Comprueba los datos del usuario por el email
+    public function datosUsuario($usuario){
 
-	unset($consulta);
-	unset($conexion);
-
-
-	if($dev==1){
-		return true;
-	} else {
-		return false;
-	}
-
-}
-
-public function datosUsuario($usuario){
-
-	$instance = BaseDatos::getInstance();
-    $conexion = $instance->getConnection();
+        $conexion = $this->getConnection();
 
 
-	$consulta=$conexion->prepare('select * from usuarios where email=?');
+        $consulta=$conexion->prepare('select * from usuarios where email=?');
 
-	$usu=$usuario;
-	
-	$consulta->bindParam(1, $usu);
+        $usu=$usuario;
+        
+        $consulta->bindParam(1, $usu);
 
-	if($consulta->execute()){
-	    while ($fila=$consulta->fetch()){   
-            $dev=$fila;
-            $nuevoUsuario = new Usuario($dev['nombre'], $dev['apellido'], $dev['email'], 
-                                        $dev['telefono'], $dev['id'], $dev['pass'], $dev['pais'], $dev['provincia'],
-                                        $dev['localidad'], $dev['calle'], $dev['detalle'], $dev['cp'],$dev['tipo']); 
-            };
-	}
+        if($consulta->execute()){
+            while ($fila=$consulta->fetch()){   
+                $dev=$fila;
+                $nuevoUsuario = new Usuario($dev['nombre'], $dev['apellido'], $dev['email'], 
+                                            $dev['telefono'], $dev['id'], $dev['pass'], $dev['pais'], $dev['provincia'],
+                                            $dev['localidad'], $dev['calle'], $dev['detalle'], $dev['cp'],$dev['tipo']); 
+                };
+        }
+        if(isset($dev)){	
+            return $nuevoUsuario;
+        }
 
-
-
-	unset($consulta);
-	unset($conexion);
-
-	if(isset($dev)){	
-		return $nuevoUsuario;
-	}
-
-}
+    }
 
 }
 

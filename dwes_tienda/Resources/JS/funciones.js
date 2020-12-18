@@ -27,10 +27,11 @@ function sumaItems(){
 function despliegaModal(id){
     
     let data = document.getElementById('articuloCompleto_'+id).value;
+    console.log(data);
     data = data.split(',')
-    
-    let modal ="<form action='#' method='post' id='"+data[1]+"'>"+
-                "<input type='hidden' name = 'idArticulo' value='"+data[1]+"'>"+
+    console.log(data);
+    let modal ="<form action='#' method='post' id='"+data[4]+"'>"+
+                "<input type='hidden' name = 'idArticulo' value='"+data[6]+"'>"+
                 "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' style='margin-top:12%'"+
                 "aria-hidden='true'>"+
                 "<div class='modal-dialog modal-lg' role='document'>"+
@@ -38,15 +39,15 @@ function despliegaModal(id){
                 "   <div class='modal-body'>"+
                 "       <div class='row'>"+
                 "       <div class='col-lg-5'>"+
-                "       <img src='../Resources/img/"+data[10]+"' style='width:250px; height:250px;'>"+          
+                "       <img src='../Resources/img/"+data[1]+"' style='width:250px; height:250px;'>"+          
                 "       </div>"+
                 "       <div class='col-lg-7'>"+
                 "           <h2 class='h2-responsive product-name'>"+
-                "           <strong>"+data[2]+"</strong>"+
+                "           <strong>"+data[0]+"</strong>"+
                 "           </h2>"+
                 "           <h4 class='h4-responsive'>"+
                 "           <span class='green-text'>"+
-                "               <strong>"+data[8]+"€</strong>"+
+                "               <strong>"+data[5]+"€</strong>"+
                 "           </span>"+
                 "           </h4>"+
                 "           <div class='accordion md-accordion' id='accordionEx' role='tablist' aria-multiselectable='true'>"+
@@ -63,7 +64,7 @@ function despliegaModal(id){
                 "               <div id='collapseThree3' class='collapse' role='tabpanel' aria-labelledby='headingThree3'"+
                 "               data-parent='#accordionEx'>"+
                 "               <div class='card-body'>"+
-                "                       "+data[12]+
+                "                       "+data[2]+
                 "               </div>"+
                 "               </div>"+
                 ""+
@@ -74,7 +75,7 @@ function despliegaModal(id){
                 ""+
                 "           <div class='text-center'>"+
                 ""+
-                "               <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='eliminaModal("+data[0]+")'>Cerrar</button>"+
+                "               <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='eliminaModal("+data[4]+")'>Cerrar</button>"+
                 "               <button class='btn btn-primary' name='nuevoItemCesta'>Comprar"+
                 "               <i class='fas fa-cart-plus ml-2' aria-hidden='true'></i>"+
                 "               </button>"+

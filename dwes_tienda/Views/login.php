@@ -31,6 +31,8 @@
             
             if ($busqueda) {
               $_SESSION['logueado'] = $usuario;
+            //   var_dump($usuario);
+            //   exit;
               header("Location: inicio.php");
             }
             else{

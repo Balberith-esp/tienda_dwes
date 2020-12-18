@@ -83,9 +83,7 @@
       </ul>
         
         <?php 
-            
-              echo '<a class="nav-link active" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
-            
+            echo '<a class="nav-link active" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
         ?>
           
           <a class="nav-link active" href="carrito.php"><i class="fas fa-shopping-cart fa-lg" ></i></a>
