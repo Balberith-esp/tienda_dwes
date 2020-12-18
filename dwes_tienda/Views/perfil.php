@@ -21,7 +21,7 @@
 
   <?php 
     /*Comprobar si el usuario esta logeado*/
-        require_once '../Resources/PHP/funciones.php';
+        require_once '../Class/BaseDatos.php';
         session_start();
         if(isset($_SESSION['logueado'])){
 

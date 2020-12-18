@@ -51,12 +51,13 @@
         <a class="nav-link" href="perfil.php">Perfil</a>
         </li>
         <?php 
+        require_once '../Class/BaseDatos.php';
             session_start();
            
             if (isset($_SESSION['logueado'])) {
                
               //A la hora de comprobar el tipo no coge nada si es admin
-                if ($_SESSION['logueado']['admin']) {
+                if ($_SESSION['logueado']->isAdmin()) {
                   echo "<li class='nav-item active'>
                       <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
                     </li>";

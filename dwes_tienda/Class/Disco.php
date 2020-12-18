@@ -15,7 +15,7 @@ class Disco {
 
     // Construct
 
-    public function __construct($id,$autor,$caratula, $detalle , $genero, $precio , $titulo, $cantidad){
+    public function __construct($id,$autor,$caratula, $detalle , $genero, $precio , $titulo){
         $this->id = $id;
         $this->autor = $autor;
         $this->caratula = $caratula;
@@ -23,7 +23,7 @@ class Disco {
         $this->genero = $genero;
         $this->precio = $precio;
         $this->titulo = $titulo;
-        $this->cantidad = $cantidad;
+        // $this->cantidad = $cantidad;
 
     }
     

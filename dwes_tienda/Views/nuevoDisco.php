@@ -22,7 +22,7 @@
 
     <title>Registro</title>
     <?php 
-    require_once '../Resources/PHP/funciones.php';
+    require_once '../Class/BaseDatos.php';
         if(isset($_POST['submit'])){
             $path = "../Resources/img/";
             $titulo=$_POST['titulo'];
@@ -32,14 +32,14 @@
 
             move_uploaded_file($_FILES['caratula']['tmp_name'], $path.$_FILES["caratula"]['name']);
 
-            nuevoDisco($titulo,$autor, $genero,$precio, $_FILES["caratula"]['name']);
+            BaseDatos::getInstance()->nuevoDisco($titulo,$autor, $genero,$precio, $_FILES["caratula"]['name']);
         }
         session_start();
            
         if (isset($_SESSION['logueado'])) {
            
           //A la hora de comprobar el tipo no coge nada si es admin
-            if (!$_SESSION['logueado']['admin']) {
+            if (!$_SESSION['logueado']->isAdmin()) {
                 header("Location: inicio.php");
             }
     
@@ -72,7 +72,7 @@
             if (isset($_SESSION['logueado'])) {
 
               //A la hora de comprobar el tipo no coge nada si es admin
-                if ($_SESSION['logueado']['admin']) {
+                if ($_SESSION['logueado']->isAdmin()) {
                   echo "<li class='nav-item active'>
                       <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
                     </li>";
