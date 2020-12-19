@@ -28,7 +28,8 @@ function despliegaModal(id){
     
     let data = document.getElementById('articuloCompleto_'+id).value;
     data = data.split(",")
-    let modal ="<form action='#' method='post' id='"+data[4]+"'>"+
+    console.log(data)
+    let modal ="<form action='#' method='post' id='"+data[5]+"'>"+
                 "<input type='hidden' name = 'idArticulo' value='"+data[6]+"'>"+
                 "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' style='margin-top:12%'"+
                 "aria-hidden='true'>"+
@@ -73,7 +74,7 @@ function despliegaModal(id){
                 ""+
                 "           <div class='text-center'>"+
                 ""+
-                "               <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='eliminaModal("+data[4]+")'>Cerrar</button>"+
+                "               <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='eliminaModal("+data[5]+")'>Cerrar</button>"+
                 "               <button class='btn btn-primary' name='nuevoItemCesta'>Comprar"+
                 "               <i class='fas fa-cart-plus ml-2' aria-hidden='true'></i>"+
                 "               </button>"+
