@@ -49,9 +49,9 @@
 
             $nuevo = true;
             for ($i=0; $i < sizeof($_SESSION['cesta']) ; $i++) { 
-              if ($articulo->getId() ==  $_SESSION['cesta'][$i]['id']) {
+              if ($articulo->getId() ==  $_SESSION['cesta'][$i]->getId()) {
                 $nuevo = false;              
-                $_SESSION['cesta'][$i]['cantidad']++;
+                // $_SESSION['cesta'][$i]['cantidad']++;
               }
             }
             if($nuevo){

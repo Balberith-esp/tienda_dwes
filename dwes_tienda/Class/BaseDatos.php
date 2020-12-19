@@ -1,7 +1,6 @@
 <?php 
 
 require_once 'Disco.php';
-
 require_once 'Usuario.php';
 
 class BaseDatos {
@@ -91,21 +90,26 @@ class BaseDatos {
     }
 
     // Metodo crea nuevo Disco
-    public function nuevoDisco($titulo, $autor, $genero, $precio, $caratula){
+    public function nuevoDisco($titulo, $autor, $genero, $precio, $caratula,$detalle){
         
         $conexion = $this->getConnection();
 
-        $consulta=$conexion->prepare('INSERT INTO discos (titulo, autor, genero, precio,caratula)
+        $consulta=$conexion->prepare('INSERT INTO discos (titulo, autor, genero, precio,caratula, detalle)
              VALUES 
-            (:titulo,:autor,:genero,:precio,:caratula)');
+            (:titulo,:autor,:genero,:precio,:caratula,:detalle)');
         
         $consulta->bindParam(':titulo',$titulo);
         $consulta->bindParam(':autor',$autor);
         $consulta->bindParam(':genero',$genero);
-        $consulta->bindParam(':precio',$precio);
         $consulta->bindParam(':caratula',$caratula);
+        $consulta->bindParam(':precio',$precio);
+        $consulta->bindParam(':detalle',$detalle);
 
-        $consulta->execute();
+        if($consulta->execute()){
+            return true;
+        }else{
+            return false;
+        }
                 
     }
     // Consulta todos los discos para pintarlos en inicio
@@ -120,7 +124,7 @@ class BaseDatos {
 		$discos = [];
 		while ($disco != null) {
             $nuevoDisco = new Disco($disco['id'],$disco['autor'],$disco['caratula'],
-                                    $disco['detalle'],$disco['genero'],$disco['precio'],$disco['titulo']);
+                                    $disco['genero'],$disco['precio'],$disco['titulo'],$disco['detalle']);
 		    array_push($discos, $nuevoDisco);
 
 		    $disco = $result->fetch();
@@ -143,7 +147,7 @@ class BaseDatos {
 		if($disco = $consulta->fetch()){
 
             $discoBuscado = new Disco($disco['id'],$disco['autor'],$disco['caratula'],
-                    $disco['detalle'],$disco['genero'],$disco['precio'],$disco['titulo']);
+            $disco['genero'],$disco['precio'],$disco['titulo'],$disco['detalle']);
 			return $discoBuscado;	
 		}	
     }

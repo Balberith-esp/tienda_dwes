@@ -111,7 +111,7 @@
                         list:false
                     },
                     titulo:{
-                        title:'Titulo del Disco',
+                        title:'Disco',
                         width:'10%',
                         edit:false
                     },
@@ -166,12 +166,12 @@
                         list:false
                     },
                     nombre:{
-                        title:'Nombre del Usuario',
+                        title:'Nombre',
                         width:'15%',
                         edit:false
                     },
                     apellido:{
-                        title:'Apellido del Usuario',
+                        title:'Apellido',
                         width:'15%',
                         edit:false
                     },

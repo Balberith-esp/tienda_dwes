@@ -27,9 +27,6 @@ function sumaItems(){
 function despliegaModal(id){
     
     let data = document.getElementById('articuloCompleto_'+id).value;
-    console.log(data);
-    data = data.split(',')
-    console.log(data);
     let modal ="<form action='#' method='post' id='"+data[4]+"'>"+
                 "<input type='hidden' name = 'idArticulo' value='"+data[6]+"'>"+
                 "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' style='margin-top:12%'"+

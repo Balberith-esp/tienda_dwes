@@ -29,10 +29,23 @@
             $autor=$_POST['autor'];
             $genero=$_POST['genero'];
             $precio=$_POST['precio'];
+            $descripcion=$_POST['descripcion'];
 
             move_uploaded_file($_FILES['caratula']['tmp_name'], $path.$_FILES["caratula"]['name']);
 
-            BaseDatos::getInstance()->nuevoDisco($titulo,$autor, $genero,$precio, $_FILES["caratula"]['name']);
+            if(BaseDatos::getInstance()->nuevoDisco($titulo,$autor, $genero,$precio, $_FILES["caratula"]['name'],$descripcion)){
+              echo "<script>
+                      $(function () { 
+                        toastr.success('Tu disco se ha creado');
+                      });
+                    </script>"; 
+            }else{
+              echo "<script>
+                        $(function () { 
+                          toastr.error('Algo ha salido mal, disco no creado');
+                        });
+                    </script>"; 
+            }
         }
         session_start();
            
@@ -58,12 +71,6 @@
         <li class="nav-item active">
           <a class="nav-link" href="inicio.php">Inicio <span class="sr-only">(current)</span></a>
         </li>
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="nuevoDisco.php">Añadir articulo</a>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#"> AdministracionUsuarios</a>
-        </li> -->
         <li class="nav-item active">
         <a class="nav-link" href="perfil.php">Perfil</a>
         </li>
@@ -150,7 +157,17 @@
                     </div>                     
                 </div>
              
-                  
+                <div class="form-group">
+                        <div class="col-xs-12">
+                        <label for="InputStreetName">Breve descripción</label>
+                        <div class="input-group">
+                        <textarea class="form-control" name="descripcion" placeholder="Descripcion.." required></textarea>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                        </div>
+<!----------------------------break-------------------------------------------------------------> 
+                    </div>                     
+                </div>
+             
 
                         <div class="form-group">
                         <div class="col-xs-12">
