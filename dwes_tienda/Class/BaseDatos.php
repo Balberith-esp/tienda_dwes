@@ -207,6 +207,35 @@ class BaseDatos {
 
     }
 
+    public function editaUsuario($id,$nombre,$apellidos,$email,$telefono,$pais,$provincia,$localidad,$calle,$detalle,$cp){
+
+        $conexion = $this->getConnection();
+			
+        $consulta=$conexion->prepare('UPDATE usuarios (SET nombre = :nombre , apellido = :apellidos ,
+                                         email = :email, telefono = :telefono, pais = :pais, provincia = :provincia,
+                                         localidad = :localidad, calle= :calle, detalle = :detalle, cp = :cp) 
+                                         WHERE id = :id');
+            
+        
+        $consulta->bindParam(':nombre',$nombre);
+        $consulta->bindParam(':apellidos',$apellidos);
+        $consulta->bindParam(':email',$email);
+        $consulta->bindParam(':telefono',$telefono);
+        $consulta->bindParam(':pais',$pais);
+        $consulta->bindParam(':provincia',$provincia);
+        $consulta->bindParam(':localidad',$localidad);
+        $consulta->bindParam(':calle',$calle);
+        $consulta->bindParam(':detalle',$detalle);
+        $consulta->bindParam(':cp',$cp);
+        $consulta->bindParam(':id',$id);
+        
+
+        $consulta->execute();
+        return true;
+
+
+    }
+
 }
 
 ?>

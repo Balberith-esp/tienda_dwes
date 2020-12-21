@@ -297,6 +297,10 @@
         $this->tipo = $tipo;
 
     }
+
+    public function getDireccionCompleta(){
+        return $this->localidad." ".$this->calle." ".$this->cp." ".$this->detalle;
+    }
 }
 
 

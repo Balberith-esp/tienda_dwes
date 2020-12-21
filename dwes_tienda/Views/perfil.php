@@ -69,7 +69,7 @@
                     </li>";
                 }
 
-            }
+                          }
 ?>
       </ul>
 
@@ -83,5 +83,108 @@
     </div>
   </nav>
 
+<br>
+
+
+<div class="container emp-profile">
+            <form method="post" action="editaUsuario.php">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                        <i class="far fa-user fa-10x"></i>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        <?php echo $_SESSION['logueado']->getNombre()." ".$_SESSION['logueado']->getApellido();?>
+                                    </h5>
+                                  
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Acerca de</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Historial de compras</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnEdita" value="Editar Perfil"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Nombre</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getNombre();?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Apellidos</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getApellido();?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getemail();?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Telefono</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getTelefono();?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Pais</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getPais();?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Direccion Completa</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><?php echo $_SESSION['logueado']->getDireccionCompleta();?></p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Historial de compras</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>....</p>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
 </body>
 </html>
