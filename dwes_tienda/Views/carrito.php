@@ -30,6 +30,8 @@
     <?php 
     /*Comprobar si el usuario esta logeado*/
     require_once '../Class/BaseDatos.php';
+    require_once '../Class/Cesta.php';
+    
     session_start();
       if(isset($_SESSION['logueado'])){
 
@@ -43,7 +45,7 @@
         //           }
         //      });
         //      </script>";
-        $_SESSION['cesta'] = [];
+        $_SESSION['cesta']->vaciar();
       }
     ?>
 </head>
@@ -101,7 +103,6 @@
                       <div class='row'>
                         <div class='col col-lg-2'><h5>Cesta</h5></div>
                         <div class='col'>Titulo</div>
-                        <div class='col'>Cantidad</div>
                         <div class='col'>Precio</div>
                       </div>
           </div>
@@ -109,18 +110,16 @@
        <ul class="list-group list-group-flush">
 
         <?php 
-        if(isset($_SESSION['cesta'])){
+        if(isset($_SESSION['cesta']) and !empty($_SESSION['cesta'])){
           echo "<form action='' method='post'>";
-
-          foreach($_SESSION['cesta'] as $value){
+          
+          foreach($_SESSION['cesta']->getArticulos() as $value){
             echo "<li class='list-group-item'>
                     <div class='container'>
                       <div class='row'>
                         <div class='col col-lg-2'><img src='../Resources/img/".$value->getCaratula()."' alt='".$value->getTitulo()."' style='width:50px;height:50px;'></div>
                         <div class='col'>".$value->getTitulo()."</div>
-                        <div class='col'><input type='number' id='".$value->getId()."' name='cantidad' min='1' max='25' value='".$value['cantidad']."' ></div>
-                        <input type='hidden' value='".$value['precio']."' id='precioUnidad_".$value->getId()."'>
-                        <div class='col precios' id='precioTotal_".$value->getId()."' >".$value->getPrecio()*$value->getCantidad()."€</div>
+                        <div class='col precios'>".$value->getPrecio()."€</div>
                       </div>
                     </div>
                   </li>";
@@ -129,7 +128,7 @@
           echo "<hr>
                 <div class='container'>
                   <div class='row'>
-                    <div class='col align-self-end' id='subtotal_id'><script> sumaItems(); </script></div>
+                    <div class='col align-self-end' id='subtotal_id'>Total: ".$_SESSION['cesta']->getCoste()."€</div>
                     
                   </div>
                 </div>
@@ -143,8 +142,9 @@
         }else{
           echo "<hr>
           <div class='container'>
+          Cesta vacia
             <div class='row'>
-               <div class='col align-self-end' id='subtotal_id'><script> sumaItems(); </script></div>
+               <div class='col align-self-end' id='subtotal_id'>Total: 0€</div>
             </div>
           </div>
           <br>
@@ -153,7 +153,7 @@
               <button class='btn btn-outline-success my-2 my-sm-0' type='submit' name='comprar'>Comprar</button>
               <button class='btn btn-outline-success my-2 my-sm-0' type='submit' name='vaciar'>Vaciar cesta</button>
             </div>
-          </div><br>Cesta vacia";
+          </div><br>";
         }
         ?>
       </ul>

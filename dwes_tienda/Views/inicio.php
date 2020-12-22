@@ -24,6 +24,7 @@
     /*Comprobar si el usuario esta logeado*/
         
         require_once '../Class/BaseDatos.php';
+        require_once '../Class/Cesta.php';
         session_start();
         if(isset($_SESSION['logueado'])){
           if(!isset($_SESSION['primeraVisita'])){
@@ -42,26 +43,12 @@
         if(isset($_POST['nuevoItemCesta'])){
           
           $idArticulo = $_POST['idArticulo'];
-
+          
           $articulo = BaseDatos::getInstance()->devuelveArticulo($idArticulo);
-
-          if(isset($_SESSION['cesta']) and $_SESSION['cesta'] != []){
-
-            $nuevo = true;
-            for ($i=0; $i < sizeof($_SESSION['cesta']) ; $i++) { 
-              if ($articulo->getId() ==  $_SESSION['cesta'][$i]->getId()) {
-                $nuevo = false;              
-                // $_SESSION['cesta'][$i]['cantidad']++;
-              }
-            }
-            if($nuevo){
-              $_SESSION['cesta'][] = $articulo;
-            }
-        }else{
-
-            $_SESSION['cesta'][] = $articulo;
-
-        }    
+          $cestaCompra=Cesta::cargaCesta();
+          $cestaCompra->nuevoArticulo($articulo);
+          $cestaCompra->guardaCesta();
+   
         echo "<script>
                 $(function () { 
                   toastr.success('Tu disco ".$articulo->getTitulo()." se ha añadido a la cesta');

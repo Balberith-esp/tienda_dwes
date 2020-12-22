@@ -30,7 +30,7 @@ function despliegaModal(id){
     data = data.split(",")
     console.log(data)
     let modal ="<form action='#' method='post' id='"+data[5]+"'>"+
-                "<input type='hidden' name = 'idArticulo' value='"+data[6]+"'>"+
+                "<input type='hidden' name = 'idArticulo' value='"+data[5]+"'>"+
                 "<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' style='margin-top:12%'"+
                 "aria-hidden='true'>"+
                 "<div class='modal-dialog modal-lg' role='document'>"+
