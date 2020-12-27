@@ -106,7 +106,7 @@
                         <div class='col '>
                             <input type='number' id='".$value->getId()."' max='10' min='1' value='".$_SESSION['cesta']->getCantidad($value->getTitulo())."'></div>
                             <input type='hidden' id='precioUnidad_".$value->getId()."' value='".$value->getPrecio()."'>
-                        <div class='col precios' id='precioTotal_".$value->getId()."'>".$value->getPrecio()."€</div>
+                        <div class='col precios' id='precioTotal_".$value->getId()."'>".$value->getPrecio()*$_SESSION['cesta']->getCantidad($value->getTitulo())."€</div>
                       </div>
                     </div>
                   </li>";
@@ -143,6 +143,7 @@
           </div><br>";
         }
         ?>
+
       </ul>
     </div>
 </body>
