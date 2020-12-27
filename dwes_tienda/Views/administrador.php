@@ -36,20 +36,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="inicio.php"><img src='../Resources/img/logo.png' alt='logo' style='width:50px;height:50px;'></a>
+      <a class="navbar-brand" href="vistaAdministrador.php"><img src='../Resources/img/logo.png' alt='logo' style='width:50px;height:50px;'></a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="inicio.php">Inicio <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="vistaAdministrador.php">Inicio <span class="sr-only">(current)</span></a>
         </li>
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="nuevoDisco.php">Añadir articulo</a>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#"> AdministracionUsuarios</a>
-        </li> -->
-        <li class="nav-item active">
-        <a class="nav-link" href="perfil.php">Perfil</a>
-        </li>
+
         <?php 
         require_once '../Class/BaseDatos.php';
             session_start();

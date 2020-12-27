@@ -65,23 +65,6 @@
         <li class="nav-item active">
         <a class="nav-link" href="perfil.php">Perfil</a>
         </li>
-        <?php 
-
-        if (isset($_SESSION['logueado'])) {
-
-          //A la hora de comprobar el tipo no coge nada si es admin
-            if ($_SESSION['logueado']->isAdmin()) {
-              echo "<li class='nav-item active'>
-                  <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
-                </li>";
-
-              echo "<li class='nav-item active'>
-                  <a class='nav-link' href='administrador.php'>Administracion</a>
-                </li>";
-            }
-
-        }
-        ?>
       </ul>
         
         <?php 
@@ -103,7 +86,8 @@
                       <div class='row'>
                         <div class='col col-lg-2'><h5>Cesta</h5></div>
                         <div class='col'>Titulo</div>
-                        <div class='col'>Precio</div>
+                        <div class='col'>Cantidad</div>
+                        <div class='col'>Precio/Und</div>
                       </div>
           </div>
         </div>
@@ -113,13 +97,16 @@
         if(isset($_SESSION['cesta']) and !empty($_SESSION['cesta'])){
           echo "<form action='' method='post'>";
           
-          foreach($_SESSION['cesta']->getArticulos() as $value){
+          foreach($_SESSION['cesta']->getArticulosUnicos() as $value){
             echo "<li class='list-group-item'>
                     <div class='container'>
                       <div class='row'>
                         <div class='col col-lg-2'><img src='../Resources/img/".$value->getCaratula()."' alt='".$value->getTitulo()."' style='width:50px;height:50px;'></div>
                         <div class='col'>".$value->getTitulo()."</div>
-                        <div class='col precios'>".$value->getPrecio()."€</div>
+                        <div class='col '>
+                            <input type='number' id='".$value->getId()."' max='10' min='1' value='".$_SESSION['cesta']->getCantidad($value->getTitulo())."'></div>
+                            <input type='hidden' id='precioUnidad_".$value->getId()."' value='".$value->getPrecio()."'>
+                        <div class='col precios' id='precioTotal_".$value->getId()."'>".$value->getPrecio()."€</div>
                       </div>
                     </div>
                   </li>";

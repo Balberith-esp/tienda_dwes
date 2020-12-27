@@ -1,10 +1,12 @@
-$(function(){
+$( document ).ready(function() {
+
     $( "input[type='number']" ).change(function() {
         let id = $(this).attr("id");
         let unidades = $(this).val();
         let precioUnidad =  $('#precioUnidad_'+id).val();
         $('#precioTotal_'+id).text((unidades*precioUnidad)+'€');
         var sum = 0;
+
         $(".precios").each(function(index) {
             let val = $(this).text();
             val = parseInt(val.substring(0,val.length-1));
@@ -72,12 +74,12 @@ function despliegaModal(id){
                 "           </div>"+
                 "           <div class='card-body'>"+
                 ""+
-                "           <div class='text-center'>"+
+                "           <div >"+
                 ""+
                 "               <button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='eliminaModal("+data[5]+")'>Cerrar</button>"+
-                "               <button class='btn btn-primary' name='nuevoItemCesta'>Comprar"+
-                "               <i class='fas fa-cart-plus ml-2' aria-hidden='true'></i>"+
-                "               </button>"+
+                // "               <button class='btn btn-primary' name='nuevoItemCesta'>Comprar"+
+                // "               <i class='fas fa-cart-plus ml-2' aria-hidden='true'></i>"+
+                // "               </button>"+
                 "           </div>"+
                 "           </div>"+
                 "       </div>"+

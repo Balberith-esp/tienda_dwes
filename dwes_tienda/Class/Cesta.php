@@ -14,6 +14,10 @@ class Cesta {
         return $this->carrito;
     }
 
+    public function getArticulosUnicos(){
+        return array_unique($this->carrito, SORT_REGULAR);
+    }
+
     public function getArticulo($n){
         return $this->carrito[$n];
     }
@@ -68,9 +72,20 @@ class Cesta {
             </script>";   
         }
 
-        public function vaciar(){
-            $this->carrito=[];
+    
+    public function vaciar(){
+        $this->carrito=[];
+    }
+
+    public function getCantidad($titulo){
+        $count = 0;
+        foreach($this->carrito as $item){
+            if($item->getTitulo()==$titulo){
+                $count++;
+            }
         }
+        return $count;
+    }
   
 }
 

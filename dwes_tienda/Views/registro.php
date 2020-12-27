@@ -98,7 +98,7 @@
                     <?php
                         session_start();
                         if(isset($_SESSION['logueado'])){
-                            if($_SESSION['logueado']['admin']){
+                            if($_SESSION['logueado']->isAdmin()){
                             echo '<br>
                                     <label>Tipo</label>
                                     <div class="input-group">
@@ -173,7 +173,18 @@
                   <div class="form-group">
                   <div class="input-group-addon">
                   <input type="submit" name="submit" id="submit" value="Registro" class="btn btn-success pull-right">
-                  <a class="btn btn-info" href="inicio.php" role="button">Volver</a>
+                  <?php 
+                  if(isset($_SESSION['logueado'])){
+                    if($_SESSION['logueado']->isAdmin()){
+                        echo '<a class="btn btn-info" href="vistaAdministrador.php" role="button">Volver</a>';
+                    }else{
+                        echo '<a class="btn btn-info" href="inicio.php" role="button">Volver</a>';
+                    }
+                  }
+                  
+                  
+                  ?>
+                  
 
                   
                   </div>

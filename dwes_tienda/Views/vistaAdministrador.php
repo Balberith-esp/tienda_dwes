@@ -9,7 +9,7 @@
 
     <!-- Imports de boostrap e iconos-->
     <link rel="stylesheet" href="../Estilos/bootstrap/css/bootstrap.min.css">
-	  <link rel="stylesheet" href="../Estilos/bootstrap/css/inicio.css">
+	  <link rel="stylesheet" href="../Estilos/bootstrap/css/vistaAdmin.css">
     <script defer src="../Estilos/icons/js/all.js"></script>
 
 	  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -24,7 +24,7 @@
     /*Comprobar si el usuario esta logeado*/
         
         require_once '../Class/BaseDatos.php';
-        require_once '../Class/Cesta.php';
+        
         session_start();
         if(isset($_SESSION['logueado'])){
           if(!isset($_SESSION['primeraVisita'])){
@@ -39,23 +39,6 @@
         }else{
           header("Location: login.php");
         }
-
-        if(isset($_POST['nuevoItemCesta'])){
-          
-          $idArticulo = $_POST['idArticulo'];
-          
-          $articulo = BaseDatos::getInstance()->devuelveArticulo($idArticulo);
-          $cestaCompra=Cesta::cargaCesta();
-          $cestaCompra->nuevoArticulo($articulo);
-          $cestaCompra->guardaCesta();
-   
-        echo "<script>
-                $(function () { 
-                  toastr.success('Tu disco ".$articulo->getTitulo()." se ha añadido a la cesta');
-                });
-            </script>";      
-      }
-
   ?>
 
 </head>
@@ -66,14 +49,16 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="inicio.php"><img src='../Resources/img/logo.png' alt='logo' style='width:50px;height:50px;'></a>
+      <a class="navbar-brand" href="vistaAdministrador.php"><img src='../Resources/img/logo.png' alt='logo' style='width:50px;height:50px;'></a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="inicio.php">Inicio <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="vistaAdministrador.php">Inicio <span class="sr-only">(current)</span></a>
         </li>
-
         <li class="nav-item active">
-        <a class="nav-link" href="perfil.php">Perfil</a>
+          <a class="nav-link" href="nuevoDisco.php">Nuevo Articulo <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="administrador.php">Datos <span class="sr-only">(current)</span></a>
         </li>
       </ul>
 
@@ -86,37 +71,31 @@
       </form>
     </div>
   </nav>
-
 <br>
-      
-    <?php
-   
-    $data = BaseDatos::getInstance()->consultaDiscos();
-        foreach($data as $key => $disco){
-          $discoArray= implode(',',(array)$disco);
-          // var_dump($discoArray);
-            echo" <form action='#' method='post'>   
-            <input type='hidden' name = 'idArticulo' value='".$disco->getId()."'>
-            <input type='hidden' id='articuloCompleto_".$disco->getId()."' value='".$discoArray."'>
-                    <div class='flip-card'>
-                        <div class='flip-card-inner'>
-                                <div class='flip-card-front'>
-                                    <img src='../Resources/img/".$disco->getCaratula()."' alt='".$disco->getTitulo()."' style='width:250px;height:250px;'>
-                                </div>
-                                    <div class='flip-card-back'>
-                                        <h1>".$disco->getAutor()."</h1> 
-                                        <p>".$disco->getTitulo()."</p>
-                                        <p>".$disco->getGenero()."</p> 
-                                        <p>".$disco->getPrecio()."€</p>
-                                        <button  type='submit' name='nuevoItemCesta' class='btn btn-success'>Compar</button>
-                                        <button  type='button' onclick='despliegaModal(".$disco->getId().")' class='btn btn-success'>Detalles</button>
-                                    </div>
-                        </div>
-                    </div>
-                  </form>";   
-        }
-    
-    ?>
+
+  <div class="container">
+    <div class="row">
+    <div class="col-sm">
+      <div class="col-md-6 quarter">
+      <a class="nav-link" href="administrador.php">
+       <i class="fas fa-database fa-10x"style="color:green;"></i><hr>
+        <h5>Database</h5></a>
+      </div>
+    </div>
+    <div class="col-sm">
+    <div class="col-md-6 quarter">
+    <a  class="nav-link" href="nuevoDisco.php">
+      <i class="fas fa-compact-disc fa-10x"style="color:green;"></i><hr>
+        <h5>Añadir articulos</h5></a>
+      </div>    </div>
+    <div class="col-sm">
+    <div class="col-md-6 quarter">
+      <a  class="nav-link" href="registro.php">
+      <i class="fas fa-user-plus fa-10x"style="color:green;"></i><hr>
+        <h5>Añadir Usuarios</h5></a>
+      </div>    </div>
+  </div>
+</div>
 
 
 </body>

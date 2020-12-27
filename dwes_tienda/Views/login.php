@@ -33,7 +33,12 @@
               $_SESSION['logueado'] = $usuario;
             //   var_dump($usuario);
             //   exit;
-              header("Location: inicio.php");
+               if ($_SESSION['logueado']->isAdmin()) {
+                  header("Location: vistaAdministrador.php");
+               }else{
+                  header("Location: inicio.php");
+               }
+              
             }
             else{
               echo "<script>bootbox.alert({centerVertical:true, message:'Usuario o contrraseña incorrectos'});</script>";

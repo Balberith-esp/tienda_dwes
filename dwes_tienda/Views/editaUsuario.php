@@ -74,32 +74,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="inicio.php">Inicio <span class="sr-only">(current)</span></a>
         </li>
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="nuevoDisco.php">Añadir articulo</a>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#"> AdministracionUsuarios</a>
-        </li> -->
         <li class="nav-item active">
         <a class="nav-link" href="perfil.php">Perfil</a>
         </li>
-        <?php 
-
-            if (isset($_SESSION['logueado'])) {
-
-              //A la hora de comprobar el tipo no coge nada si es admin
-                if ($_SESSION['logueado']->isAdmin()) {
-                  echo "<li class='nav-item active'>
-                      <a class='nav-link' href='nuevoDisco.php'>Añadir articulo</a>
-                    </li>";
-
-                  echo "<li class='nav-item active'>
-                      <a class='nav-link' href='administrador.php'>Administracion</a>
-                    </li>";
-                }
-
-                          }
-?>
       </ul>
 
           <a class="nav-link active" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
